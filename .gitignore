@@ -78,10 +78,15 @@ web_modules/
 .env.test.local
 .env.production.local
 .env.local
+*.local
 
 # parcel-bundler cache (https://parceljs.org/)
 .cache
 .parcel-cache
+
+# Vite Build Outputs
+dist
+dist-ssr
 
 # Next.js build output
 .next
@@ -89,7 +94,6 @@ out
 
 # Nuxt.js build / generate output
 .nuxt
-dist
 
 # Gatsby files
 .cache/
@@ -118,6 +122,17 @@ dist
 
 # TernJS port file
 .tern-port
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
 
 # Stores VSCode versions used for testing VSCode extensions
 .vscode-test
