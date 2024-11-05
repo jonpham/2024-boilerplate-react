@@ -1,5 +1,11 @@
 {
   "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": [
+        "src/*"
+      ]
+    },
     "target": "ES2020",
     "useDefineForClassFields": true,
     "lib": [
@@ -23,6 +29,10 @@
     "noFallthroughCasesInSwitch": true
   },
   "include": [
-    "src"
+    "src/**/*"
+  ],
+  "exclude": [
+    /* Test / Mock files */
+    "src/**/__tests__/*.{test,spec}.{ts,tsx}"
   ]
 }
