@@ -1,56 +1,59 @@
 {
-  "name": "react-boilerplate-202410",
-  "private": true,
-  "version": "0.0.0",
-  "type": "module",
-  "scripts": {
-    "dev": "vite",
-    "build": "tsc -b && vite build",
-    "hostBuild": "vite preview",
-    "lint": "eslint .",
-    "test": "vitest",
-    "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
-  },
-  "dependencies": {
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1"
-  },
-  "devDependencies": {
-    "@chromatic-com/storybook": "^1.9.0",
-    "@eslint/js": "^9.11.1",
-    "@storybook/addon-essentials": "^8.3.6",
-    "@storybook/addon-interactions": "^8.3.6",
-    "@storybook/addon-links": "^8.3.6",
-    "@storybook/addon-onboarding": "^8.3.6",
-    "@storybook/blocks": "^8.3.6",
-    "@storybook/react": "^8.3.6",
-    "@storybook/react-vite": "^8.3.6",
-    "@storybook/test": "^8.3.6",
-    "@testing-library/jest-dom": "^6.6.2",
-    "@testing-library/react": "^16.0.1",
-    "@testing-library/user-event": "^14.5.2",
-    "@types/react": "^18.3.10",
-    "@types/react-dom": "^18.3.0",
-    "@vitejs/plugin-react-swc": "^3.5.0",
-    "eslint": "^9.11.1",
-    "eslint-plugin-react": "^7.37.1",
-    "eslint-plugin-react-hooks": "^5.1.0-rc.0",
-    "eslint-plugin-react-refresh": "^0.4.12",
-    "eslint-plugin-storybook": "^0.10.1",
-    "globals": "^15.9.0",
-    "jsdom": "^25.0.1",
-    "storybook": "^8.3.6",
-    "typescript": "^5.5.3",
-    "typescript-eslint": "^8.7.0",
-    "vite": "^5.4.8",
-    "vite-tsconfig-paths": "^5.1.0",
-    "vitest": "^2.1.3"
-  },
-  "packageManager": "pnpm@9.12.1+sha512.e5a7e52a4183a02d5931057f7a0dbff9d5e9ce3161e33fa68ae392125b79282a8a8a470a51dfc8a0ed86221442eb2fb57019b0990ed24fab519bf0e1bc5ccfc4",
-  "eslintConfig": {
-    "extends": [
-      "plugin:storybook/recommended"
-    ]
-  }
+    "name": "react-boilerplate-202410",
+    "private": true,
+    "version": "0.0.0",
+    "type": "module",
+    "scripts": {
+        "dev": "vite",
+        "build": "tsc -b && vite build",
+        "hostBuild": "vite preview",
+        "format": "prettier --write ./src",
+        "lint": "eslint .",
+        "test": "vitest",
+        "storybook": "storybook dev -p 6006",
+        "build-storybook": "storybook build"
+    },
+    "dependencies": {
+        "react": "^18.3.1",
+        "react-dom": "^18.3.1"
+    },
+    "devDependencies": {
+        "@chromatic-com/storybook": "^1.9.0",
+        "@eslint/js": "^9.11.1",
+        "@storybook/addon-essentials": "^8.3.6",
+        "@storybook/addon-interactions": "^8.3.6",
+        "@storybook/addon-links": "^8.3.6",
+        "@storybook/addon-onboarding": "^8.3.6",
+        "@storybook/blocks": "^8.3.6",
+        "@storybook/react": "^8.3.6",
+        "@storybook/react-vite": "^8.3.6",
+        "@storybook/test": "^8.3.6",
+        "@testing-library/jest-dom": "^6.6.2",
+        "@testing-library/react": "^16.0.1",
+        "@testing-library/user-event": "^14.5.2",
+        "@types/react": "^18.3.10",
+        "@types/react-dom": "^18.3.0",
+        "@vitejs/plugin-react-swc": "^3.5.0",
+        "eslint": "^9.11.1",
+        "eslint-config-prettier": "^9.1.0",
+        "eslint-plugin-react": "^7.37.1",
+        "eslint-plugin-react-hooks": "^5.1.0-rc.0",
+        "eslint-plugin-react-refresh": "^0.4.12",
+        "eslint-plugin-storybook": "^0.10.1",
+        "globals": "^15.9.0",
+        "jsdom": "^25.0.1",
+        "prettier": "^3.3.3",
+        "storybook": "^8.3.6",
+        "typescript": "^5.5.3",
+        "typescript-eslint": "^8.7.0",
+        "vite": "^5.4.8",
+        "vite-tsconfig-paths": "^5.1.0",
+        "vitest": "^2.1.3"
+    },
+    "packageManager": "pnpm@9.12.1+sha512.e5a7e52a4183a02d5931057f7a0dbff9d5e9ce3161e33fa68ae392125b79282a8a8a470a51dfc8a0ed86221442eb2fb57019b0990ed24fab519bf0e1bc5ccfc4",
+    "eslintConfig": {
+        "extends": [
+            "plugin:storybook/recommended"
+        ]
+    }
 }

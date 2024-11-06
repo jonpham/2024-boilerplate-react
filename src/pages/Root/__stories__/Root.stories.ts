@@ -21,10 +21,12 @@ export const Header: Story = {
     const canvas = within(canvasElement);
     const header = canvas.getByText(/Vite \+ React/i, { selector: 'h1' });
     await expect(header).toBeVisible();
-    const countButton = canvas.getByRole('button', { name: /count is 0/ })
+    const countButton = canvas.getByRole('button', { name: /count is 0/ });
     await expect(countButton).toBeVisible();
     await expect(countButton).toBeEnabled();
     await userEvent.click(countButton);
-    await expect(canvas.getByRole('button', { name: /count is 1/ })).toBeVisible();
+    await expect(
+      canvas.getByRole('button', { name: /count is 1/ })
+    ).toBeVisible();
   },
 };

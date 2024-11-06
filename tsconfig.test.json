@@ -1,0 +1,13 @@
+{
+  "extends": "./tsconfig.app.json",
+  "compilerOptions": {
+    "types": ["@testing-library/jest-dom"]
+  },
+  "include": [
+    ".storybook/**/*",
+    "./vitest.setup.ts",
+    "src/**/*",
+    "src/**/__tests__/*.{test,spec}.{ts,tsx}"
+  ],
+  "exclude": []
+}
