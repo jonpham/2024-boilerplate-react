@@ -1,7 +1,4 @@
 import { screen } from '@testing-library/react';
-import render from "./domTests";
+import render from './domTests';
 
-export {
-    screen,
-    render
-};
+export { screen, render };
