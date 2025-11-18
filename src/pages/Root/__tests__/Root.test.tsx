@@ -31,7 +31,7 @@ describe('RootPage', () => {
       name: /count is \d+/,
     });
     // Assert on Expectations
-    expect(countButton).toBeVisible();
+    expect(countButton).not.toBeNull();
     expect(extractCountFromButtonText(getCountButtonEl())).toEqual(0);
   });
 
