@@ -9,16 +9,27 @@ jobs:
     environment: AWS-STAGING
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
         with:
           node-version-file: package.json
+
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: ${{ secrets.AWS_GH_ROLE_ARN }}
           aws-region: ${{ secrets.AWS_REGION }}
-      - run: npm install
+
+      - name: Install infra dependencies
+        run: |
+          cd infra
+          pnpm install
+
       - uses: pulumi/actions@v6
         with:
           command: preview
