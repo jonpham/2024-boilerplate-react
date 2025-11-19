@@ -4,6 +4,7 @@ on:
 jobs:
   preview:
     name: Preview
+    environment: AWS-STAGING
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
