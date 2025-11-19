@@ -1,0 +1,54 @@
+name: Build & Deploy to S3 with Pulumi
+
+on:
+  push:
+    branches: ['main']
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: package.json
+      - name: Install Pulumi CLI
+        uses: pulumi/actions@v4
+      - name: Install infra dependencies
+        run: |
+          cd infra
+          pnpm install
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@main # Or a specific version
+        with:
+          role-to-assume: ${{ secrets.AWS_GH_ROLE_ARN }}
+          aws-region: ${{ secrets.AWS_REGION }}
+      - name: Preview & Update Pulumi stack
+        env:
+          PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
+        run: |
+          aws sts get-caller-identity 
+          cd infra
+          pulumi up --yes
+
+      - name: Get Bucket Name
+        id: bucket
+        env:
+          PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
+        run: |
+          cd infra
+          echo "BUCKET_NAME=$(pulumi stack output bucketName)" >> $GITHUB_OUTPUT
+
+      - name: Install app dependencies
+        run: pnpm install
+
+      - name: Build React app
+        run: pnpm run build
+
+      - name: Upload dist/ to S3
+        run: |
+          aws sts get-caller-identity 
+          aws s3 sync dist/ s3://${{ steps.bucket.outputs.BUCKET_NAME }} --delete
