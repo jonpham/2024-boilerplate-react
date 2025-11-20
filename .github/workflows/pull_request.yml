@@ -5,9 +5,8 @@ permissions:
   id-token: write
   contents: read
 jobs:
-  preview:
-    name: Preview
-    environment: AWS-STAGING
+  test:
+    name: Test
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
@@ -20,6 +19,21 @@ jobs:
         with:
           node-version-file: package.json
 
+      - name: Install app dependencies
+        run: pnpm install
+
+      - name: Lint Code
+        run: pnpm run lint
+
+      - name: Test Code
+        run: pnpm run test
+
+  preview:
+    name: Preview
+    environment: AWS-STAGING
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
@@ -50,9 +64,6 @@ jobs:
         run: |
           cd infra
           echo "BUCKET_NAME=$(pulumi stack output siteBucketName)" >> $GITHUB_OUTPUT
-
-      - name: Install app dependencies
-        run: pnpm install
 
       - name: Build React app
         run: pnpm run build
