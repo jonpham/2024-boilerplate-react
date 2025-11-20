@@ -3,6 +3,7 @@ on:
   - pull_request
 permissions:
   id-token: write
+  contents: read
 jobs:
   preview:
     name: Preview
@@ -23,9 +24,9 @@ jobs:
         uses: aws-actions/configure-aws-credentials@v4
         with:
           aws-region: ${{ vars.AWS_REGION }}
-          role-to-assume: ${{ vars.AWS_GH_ROLE_ARN }}
-          # aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          # aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          # role-to-assume: ${{ vars.AWS_GH_ROLE_ARN }}
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
       - run: aws sts get-caller-identity
 
@@ -37,7 +38,26 @@ jobs:
       - uses: pulumi/actions@v6
         with:
           work-dir: infra
-          command: preview
+          command: up
           stack-name: jonpham/static-web-aws-ts/staging # When using an individual account, only use stack-name.
         env:
           PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
+
+      - name: Get Bucket Name
+        id: bucket
+        env:
+          PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
+        run: |
+          cd infra
+          echo "BUCKET_NAME=$(pulumi stack output bucketName)" >> $GITHUB_OUTPUT
+
+      - name: Install app dependencies
+        run: pnpm install
+
+      - name: Build React app
+        run: pnpm run build
+
+      - name: Upload dist/ to S3
+        run: |
+          aws sts get-caller-identity 
+          aws s3 sync dist/ s3://${{ steps.bucket.outputs.BUCKET_NAME }} --delete
