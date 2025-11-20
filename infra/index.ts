@@ -10,6 +10,7 @@ const path = config.get('path') || './www';
 const indexDocument = config.get('indexDocument') || 'index.html';
 const errorDocument = config.get('errorDocument') || 'error.html';
 
+/** S3 Bucket & Website Assets */
 // Create an S3 bucket and configure it as a website.
 const siteBucket = new aws.s3.Bucket(PROJECT_NAME);
 
@@ -52,6 +53,12 @@ const bucketFolder = new synced_folder.S3BucketFolder(
   },
   { dependsOn: [ownershipControls, publicAccessBlock] }
 );
+
+// Export the URLs and hostnames of the bucket.
+export const originURL = pulumi.interpolate`http://${siteBucketWebsite.websiteEndpoint}`;
+export const originHostname = siteBucketWebsite.websiteEndpoint;
+
+/** CDN
 
 // Create a CloudFront CDN to distribute and cache the website.
 const cdn = new aws.cloudfront.Distribution('cdn', {
@@ -101,8 +108,7 @@ const cdn = new aws.cloudfront.Distribution('cdn', {
   },
 });
 
-// Export the URLs and hostnames of the bucket and distribution.
-export const originURL = pulumi.interpolate`http://${siteBucketWebsite.websiteEndpoint}`;
-export const originHostname = siteBucketWebsite.websiteEndpoint;
+// Export the URLs and hostnames of the CDN distribution.
 export const cdnURL = pulumi.interpolate`https://${cdn.domainName}`;
 export const cdnHostname = cdn.domainName;
+*/
