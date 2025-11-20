@@ -11,13 +11,7 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
-
       - uses: pnpm/action-setup@v4
-
-      - name: Setup Node
-        uses: actions/setup-node@v4
-        with:
-          node-version-file: package.json
 
       - name: Install app dependencies
         run: pnpm install
@@ -34,6 +28,17 @@ jobs:
     runs-on: ubuntu-latest
     needs: test
     steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+
+      # Build React App
+      - name: Install app dependencies
+        run: pnpm install
+      - name: Build React app
+        run: pnpm run build
+
+      # Prepare AWS Credentials
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
@@ -41,14 +46,12 @@ jobs:
           # role-to-assume: ${{ vars.AWS_GH_ROLE_ARN }}
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-
       - run: aws sts get-caller-identity
-
+      # Deploy infrastructure and upload to S3
       - name: Install infra dependencies
         run: |
           cd infra
           pnpm install
-
       - uses: pulumi/actions@v6
         with:
           work-dir: infra
@@ -56,7 +59,6 @@ jobs:
           stack-name: jonpham/static-web-aws-ts/staging # When using an individual account, only use stack-name.
         env:
           PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
-
       - name: Get Bucket Name
         id: bucket
         env:
@@ -64,10 +66,6 @@ jobs:
         run: |
           cd infra
           echo "BUCKET_NAME=$(pulumi stack output siteBucketName)" >> $GITHUB_OUTPUT
-
-      - name: Build React app
-        run: pnpm run build
-
       - name: Upload dist/ to S3
         run: |
           aws sts get-caller-identity 

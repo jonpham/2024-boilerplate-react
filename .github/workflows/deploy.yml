@@ -34,6 +34,10 @@ jobs:
     needs: test
     environment: AWS-STAGING
     steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+
       - name: Install Pulumi CLI
         uses: pulumi/actions@v6
 
