@@ -52,7 +52,7 @@ jobs:
           PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
         run: |
           cd infra
-          echo "BUCKET_NAME=$(pulumi stack output bucketName)" >> $GITHUB_OUTPUT
+          echo "BUCKET_NAME=$(pulumi stack output siteBucketName)" >> $GITHUB_OUTPUT
 
       - name: Install app dependencies
         run: pnpm install
