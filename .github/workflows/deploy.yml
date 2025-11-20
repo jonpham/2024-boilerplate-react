@@ -44,7 +44,7 @@ jobs:
         run: |
           aws sts get-caller-identity 
           cd infra
-          pulumi up --yes
+          pulumi up --yes --stack jonpham/static-web-aws-ts/prod
 
       - name: Get Bucket Name
         id: bucket
