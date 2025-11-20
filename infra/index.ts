@@ -6,7 +6,7 @@ const PROJECT_NAME = 'static-web-cdn';
 
 // Import the program's configuration settings.
 const config = new pulumi.Config();
-const path = config.get('path') || './www';
+const path = config.get('path') || '../dist';
 const indexDocument = config.get('indexDocument') || 'index.html';
 const errorDocument = config.get('errorDocument') || 'error.html';
 
