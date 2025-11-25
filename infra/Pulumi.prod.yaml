@@ -4,3 +4,4 @@ config:
   static-web-aws-ts:indexDocument: index.html
   static-web-aws-ts:pathToWebsiteContents: ../dist
   static-web-aws-ts:targetDomain: react.jonathanpham.com
+  static-web-aws-ts:certificateArn: arn:aws:acm:us-east-1:157602509803:certificate/dae7007a-dc7f-4250-a345-f83aa03c34d8
