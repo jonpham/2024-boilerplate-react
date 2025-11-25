@@ -26,7 +26,6 @@
   "include": ["src/**/*"],
   "exclude": [
     /* Test / Mock files */
-    "infra/*.ts",
     ".storybook/**/*",
     "src/**/__tests__/*.{test,spec}.{ts,tsx}"
   ]

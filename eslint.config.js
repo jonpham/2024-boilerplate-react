@@ -8,7 +8,7 @@ import tseslint from 'typescript-eslint';
 
 export default tseslint.config({
   settings: { react: { version: '18.3' } },
-  ignores: ['dist', '.storybook', 'infra/index.ts'],
+  ignores: ['dist', '.storybook', 'infra/**/*'],
   extends: [
     js.configs.recommended,
     ...tseslint.configs.recommendedTypeChecked,
@@ -26,7 +26,7 @@ export default tseslint.config({
         './tsconfig.app.json',
         './tsconfig.node.json',
       ],
-      projectFolderIgnoreList: ['./.storybook', './infra'],
+      projectFolderIgnoreList: ['./.storybook'],
       tsconfigRootDir: import.meta.dirname,
     },
   },
