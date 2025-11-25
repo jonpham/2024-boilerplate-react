@@ -59,14 +59,15 @@ jobs:
           stack-name: jonpham/static-web-aws-ts/staging # When using an individual account, only use stack-name.
         env:
           PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
-      - name: Get Bucket Name
-        id: bucket
-        env:
-          PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
-        run: |
-          cd infra
-          echo "BUCKET_NAME=$(pulumi stack output siteBucketName)" >> $GITHUB_OUTPUT
-      - name: Upload dist/ to S3
-        run: |
-          aws sts get-caller-identity 
-          aws s3 sync dist/ s3://${{ steps.bucket.outputs.BUCKET_NAME }} --delete
+      ## PULUMI SYNCED BUCKET DOES THIS FOR PUBLIC S3 Website (STAGING)
+      # - name: Get Bucket Name
+      #   id: bucket
+      #   env:
+      #     PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
+      #   run: |
+      #     cd infra
+      #     echo "BUCKET_NAME=$(pulumi stack output siteBucketName)" >> $GITHUB_OUTPUT
+      # - name: Upload dist/ to S3
+      #   run: |
+      #     aws sts get-caller-identity
+      #     aws s3 sync dist/ s3://${{ steps.bucket.outputs.BUCKET_NAME }} --delete

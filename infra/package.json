@@ -1,12 +1,14 @@
 {
-    "name": "static-web-aws-ts",
-    "devDependencies": {
-        "@types/node": "^18",
-        "typescript": "^5.0.0"
-    },
-    "dependencies": {
-        "@pulumi/aws": "^7.0.0",
-        "@pulumi/synced-folder": "^0.12.4",
-        "@pulumi/pulumi": "^3.113.0"
-    }
+  "name": "static-web-aws-ts",
+  "devDependencies": {
+    "@types/mime": "^3.0.4",
+    "@types/node": "^18",
+    "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "@pulumi/aws": "^7.0.0",
+    "@pulumi/pulumi": "^3.113.0",
+    "@pulumi/synced-folder": "^0.12.4",
+    "mime": "^3.0.0"
+  }
 }

@@ -17,7 +17,13 @@ importers:
       '@pulumi/synced-folder':
         specifier: ^0.12.4
         version: 0.12.4(typescript@5.9.3)
+      mime:
+        specifier: ^3.0.0
+        version: 3.0.0
     devDependencies:
+      '@types/mime':
+        specifier: ^3.0.4
+        version: 3.0.4
       '@types/node':
         specifier: ^18
         version: 18.19.130
@@ -287,6 +293,9 @@ packages:
 
   '@types/keyv@3.1.4':
     resolution: {integrity: sha512-BQ5aZNSCpj7D6K2ksrRCTmKRLEpnPvWDiLPfoGyhZ++8YtiK9d/3DBKPJgry359X/P1PfruyYwvnvwFjuEiEIg==}
+
+  '@types/mime@3.0.4':
+    resolution: {integrity: sha512-iJt33IQnVRkqeqC7PzBHPTC6fDlRNRW8vjrgqtScAhrmMwe8c4Eo7+fUGTa+XdWrpEgpyKWMYmi2dIwMAYRzPw==}
 
   '@types/node@18.19.130':
     resolution: {integrity: sha512-GRaXQx6jGfL8sKfaIDD6OupbIHBr9jv7Jnaml9tB7l4v068PAOXqfcujMMo5PhbIs6ggR1XODELqahT2R8v0fg==}
@@ -656,6 +665,11 @@ packages:
   mime@2.6.0:
     resolution: {integrity: sha512-USPkMeET31rOMiarsBNIHZKLGgvKc/LrjofAnBlOttf5ajRvqiRA8QsenbcooctK6d6Ts6aqZXBA+XbkKthiQg==}
     engines: {node: '>=4.0.0'}
+    hasBin: true
+
+  mime@3.0.0:
+    resolution: {integrity: sha512-jSCU7/VB1loIWBZe14aEYHU/+1UMEHoaO7qxCOVJOw9GgH72VAWppxNcjU+x9a2k3GSIBXNKxXQFqRvvZ7vr3A==}
+    engines: {node: '>=10.0.0'}
     hasBin: true
 
   mimic-fn@2.1.0:
@@ -1477,6 +1491,8 @@ snapshots:
     dependencies:
       '@types/node': 18.19.130
 
+  '@types/mime@3.0.4': {}
+
   '@types/node@18.19.130':
     dependencies:
       undici-types: 5.26.5
@@ -1832,6 +1848,8 @@ snapshots:
   merge-stream@2.0.0: {}
 
   mime@2.6.0: {}
+
+  mime@3.0.0: {}
 
   mimic-fn@2.1.0: {}
 
