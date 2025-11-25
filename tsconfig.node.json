@@ -22,5 +22,5 @@
     "noFallthroughCasesInSwitch": true
   },
   "include": ["vite.config.ts"],
-  "exclude": [".storybook/**/*", "infra/index.ts"]
+  "exclude": [".storybook/**/*", "infra/*.ts"]
 }
