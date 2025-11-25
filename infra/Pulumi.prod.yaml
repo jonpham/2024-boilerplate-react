@@ -3,5 +3,4 @@ config:
   static-web-aws-ts:errorDocument: error.html
   static-web-aws-ts:indexDocument: index.html
   static-web-aws-ts:pathToWebsiteContents: ../dist
-  static-web-aws-ts:targetDomain: jonathanpham.com
-  static-web-aws-ts:subDomain: react
+  static-web-aws-ts:targetDomain: react.jonathanpham.com

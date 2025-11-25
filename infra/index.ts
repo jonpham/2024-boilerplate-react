@@ -5,11 +5,11 @@ import {
   createSiteBucket,
   setCloudFrontBucketPolicy,
   setPublicBucketPolicy,
-} from './s3_website';
+} from './modules/s3_website';
 import {
   createCertificate,
   setupS3SiteCloudFrontDomainDistribution,
-} from './domain_routing';
+} from './modules/domain_routing';
 
 const PROJECT_NAME = 'static-web-cdn';
 const STACK_NAME = pulumi.getStack();
@@ -48,17 +48,17 @@ const staticSite = createSiteBucket(
 
 // Set Bucket Policy depending on whether CDN is used or not
 let cdn: cloudfront.Distribution | undefined = undefined;
+let certificateArn: pulumi.Input<string> = config.certificateArn!;
 if (config.target === 'staging') {
   setPublicBucketPolicy(config.pathToWebsiteContents, staticSite.contentBucket);
 } else {
   // Create certificate, CloudFront and DNS records for the provided domain
-  let certificateArn: pulumi.Input<string> = config.certificateArn!;
-
   /**
    * Only provision a certificate (and related resources) if a certificateArn is _not_ provided via configuration.
    */
   if (!certificateArn) {
     certificateArn = createCertificate(config.target, config.includeWWW);
+    console.log(`Created certificate for ${config.target}`, certificateArn);
   }
   // Export properties from this stack. This prints them at the end of `pulumi up` and
   // makes them easier to access from pulumi.com.
@@ -71,7 +71,11 @@ if (config.target === 'staging') {
       config.includeWWW
     );
 
-  setCloudFrontBucketPolicy(staticSite.contentBucket, originAccessIdentity);
+  setCloudFrontBucketPolicy(
+    staticSite.contentBucket,
+    config.pathToWebsiteContents,
+    originAccessIdentity
+  );
   cdn = cloudFrontDistribution;
 }
 
@@ -79,7 +83,9 @@ if (config.target === 'staging') {
 // makes them easier to access from pulumi.com.
 export const { contentBucketUri, contentBucketWebsiteEndpoint } =
   staticSite.output;
-export const cdnDomainName = cdn?.domainName;
 export const targetDomainEndpoint = cdn
   ? `https://${config.target}/`
   : contentBucketWebsiteEndpoint;
+
+export const cdnDomainName = cdn?.domainName;
+export const certificateUsed = certificateArn;

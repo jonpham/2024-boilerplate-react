@@ -101,6 +101,7 @@ export function setPublicBucketPolicy(
 
 export function setCloudFrontBucketPolicy(
   contentBucket: aws.s3.Bucket,
+  contentPath: string,
   originAccessIdentity: aws.cloudfront.OriginAccessIdentity
 ) {
   const bucketPolicy = new aws.s3.BucketPolicy('bucketPolicy', {
@@ -119,6 +120,17 @@ export function setCloudFrontBucketPolicy(
       ],
     }),
   });
+
+  // Use a synced folder to manage the files of the website.
+  const bucketFolder = new synced_folder.S3BucketFolder(
+    'bucket-folder',
+    {
+      path: contentPath,
+      bucketName: contentBucket.bucket,
+      acl: 'private',
+    },
+    { dependsOn: [bucketPolicy] }
+  );
 }
 
 // crawlDirectory recursive crawls the provided directory, applying the provided function
