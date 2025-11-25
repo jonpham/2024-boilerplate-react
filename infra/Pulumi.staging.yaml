@@ -2,4 +2,4 @@ config:
   aws:region: us-west-2
   static-web-aws-ts:errorDocument: error.html
   static-web-aws-ts:indexDocument: index.html
-  static-web-aws-ts:path: ../dist
+  static-web-aws-ts:pathToWebsiteContents: ../dist
