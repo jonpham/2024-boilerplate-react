@@ -13,10 +13,13 @@ export function createSiteBucket(
   websiteAssetPath: string,
   indexDoc: string,
   errorDoc: string,
+  bucketName: string | null = null,
   syncAssetsToBucket: boolean = false
 ) {
   // contentBucket is the S3 bucket that the website's contents will be stored in.
-  const contentBucket = new aws.s3.Bucket(`${projectName}-content`);
+  const contentBucket = bucketName
+    ? new aws.s3.Bucket(`${projectName}-content`, { bucket: bucketName })
+    : new aws.s3.Bucket(`${projectName}-content`);
 
   // logsBucket is an S3 bucket that will contain the CDN's request logs.
   const logsBucket = new aws.s3.Bucket(`${projectName}-logs`);

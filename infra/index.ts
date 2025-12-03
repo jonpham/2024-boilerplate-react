@@ -43,6 +43,7 @@ const staticSite = createSiteBucket(
   config.pathToWebsiteContents,
   config.indexDocument,
   config.errorDocument,
+  config.target === 'staging' ? undefined : config.target,
   config.syncAssetsToBucket
 );
 
