@@ -3,13 +3,13 @@ import { cloudfront } from '@pulumi/aws';
 
 import {
   createSiteBucket,
-  setCloudFrontBucketPolicy,
+  // setCloudFrontBucketPolicy,
   setPublicBucketPolicy,
 } from './modules/s3_website';
-import {
-  createCertificate,
-  setupS3SiteCloudFrontDomainDistribution,
-} from './modules/domain_routing';
+// import {
+//   createCertificate,
+//   setupS3SiteCloudFrontDomainDistribution,
+// } from './modules/domain_routing';
 
 const PROJECT_NAME = 'static-web-cdn';
 const STACK_NAME = pulumi.getStack();
@@ -50,35 +50,35 @@ const staticSite = createSiteBucket(
 // Set Bucket Policy depending on whether CDN is used or not
 let cdn: cloudfront.Distribution | undefined = undefined;
 let certificateArn: pulumi.Input<string> = config.certificateArn!;
-if (config.target === 'staging') {
-  setPublicBucketPolicy(config.pathToWebsiteContents, staticSite.contentBucket);
-} else {
-  // Create certificate, CloudFront and DNS records for the provided domain
-  /**
-   * Only provision a certificate (and related resources) if a certificateArn is _not_ provided via configuration.
-   */
-  if (!certificateArn) {
-    certificateArn = createCertificate(config.target, config.includeWWW);
-    console.log(`Created certificate for ${config.target}`, certificateArn);
-  }
-  // Export properties from this stack. This prints them at the end of `pulumi up` and
-  // makes them easier to access from pulumi.com.
-  const { cdn: cloudFrontDistribution, originAccessIdentity } =
-    setupS3SiteCloudFrontDomainDistribution(
-      staticSite.contentBucket,
-      staticSite.logsBucket,
-      config.target,
-      certificateArn,
-      config.includeWWW
-    );
+// if (config.target === 'staging') {
+setPublicBucketPolicy(config.pathToWebsiteContents, staticSite.contentBucket);
+// } else {
+//   // Create certificate, CloudFront and DNS records for the provided domain
+//   /**
+//    * Only provision a certificate (and related resources) if a certificateArn is _not_ provided via configuration.
+//    */
+//   if (!certificateArn) {
+//     certificateArn = createCertificate(config.target, config.includeWWW);
+//     console.log(`Created certificate for ${config.target}`, certificateArn);
+//   }
+//   // Export properties from this stack. This prints them at the end of `pulumi up` and
+//   // makes them easier to access from pulumi.com.
+//   const { cdn: cloudFrontDistribution, originAccessIdentity } =
+//     setupS3SiteCloudFrontDomainDistribution(
+//       staticSite.contentBucket,
+//       staticSite.logsBucket,
+//       config.target,
+//       certificateArn,
+//       config.includeWWW
+//     );
 
-  setCloudFrontBucketPolicy(
-    staticSite.contentBucket,
-    config.pathToWebsiteContents,
-    originAccessIdentity
-  );
-  cdn = cloudFrontDistribution;
-}
+//   setCloudFrontBucketPolicy(
+//     staticSite.contentBucket,
+//     config.pathToWebsiteContents,
+//     originAccessIdentity
+//   );
+//   cdn = cloudFrontDistribution;
+// }
 
 // Export properties from this stack. This prints them at the end of `pulumi up` and
 // makes them easier to access from pulumi.com.
@@ -88,5 +88,5 @@ export const targetDomainEndpoint = cdn
   ? `https://${config.target}/`
   : contentBucketWebsiteEndpoint;
 
-export const cdnDomainName = cdn?.domainName;
+// export const cdnDomainName = cdn?.domainName;
 export const certificateUsed = certificateArn;
